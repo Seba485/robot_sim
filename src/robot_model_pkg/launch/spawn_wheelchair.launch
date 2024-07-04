@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_id" default="wheelchair_iaslab" />
+    <arg name="x" default="-8.211123"/>
+    <arg name="y" default="1.471889"/>
+    <arg name="z" default="0.0"/>
+    <arg name="yaw" default="0"/>
+
+    <arg name="prefix" value="wcias_" />
+
+    <!--load the robot description-->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find robot_model_pkg)/urdf/wheelchair_iaslab.xacro'"/>
+
+    <!-- Spawn robot in gazebo -->
+    <node name="spawn_wheelchair_iaslab_model" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-x $(arg x)
+                -y $(arg y)
+                -z $(arg z)
+                -Y $(arg yaw)
+                -unpause
+                -urdf
+                -param robot_description
+                -model $(arg robot_id)" />
+
+
+    <!-- <include file="$(find wheelchair_iaslab_control)/launch/control.launch">
+        <arg name="simulation" value="true"/>
+        <arg name="prefix" value="$(arg prefix)" /> 
+    </include> -->
+
+    <!-- <include file="$(find wheelchair_iaslab_init)/launch/init.launch" />  -->
+
+    <!-- initialize the sensors -->
+    <arg name="angle_min"          default="0.6"/> <!-- 0.79 -->
+    <arg name="angle_max"          default="1.8"/>
+
+    <!-- Hokuyo left -->
+    <node name="left_urg_node" pkg="urg_node" type="urg_node" output="screen">
+        <param name="frame_id"         value="/wcias_hokuyo_laser_link_left"/>  
+        <param name="serial_port"      value="/dev/hokuyo_H2156238" />
+        <param name="serial_baud"      value="115200" />
+        <param name="calibrate_time"   value="true" />
+        <param name="angle_max"        value="$(arg angle_max)"  />
+        <param name="angle_min"        value="-$(arg angle_min)" />
+        <remap from="scan"             to="scan_left" />
+    </node>
+
+    <!-- Hokuyo right -->
+    <node name="right_urg_node" pkg="urg_node" type="urg_node" output="screen">
+        <param name="frame_id"         value="/wcias_hokuyo_laser_link_right"/>  
+        <param name="serial_port"      value="/dev/hokuyo_H1853627" />
+        <param name="serial_baud"      value="115200" />
+        <param name="calibrate_time"   value="true" />
+        <param name="angle_min"        value="-$(arg angle_max)"  />
+        <param name="angle_max"        value="$(arg angle_min)"   />
+        <remap from="scan"             to="scan_right" />
+    </node>
+
+    <!-- initialize the urdf    -->
+    <include file="$(find robot_model_pkg)/launch/urdf_sensor.launch"/>  
+
+    <!-- Odometry -->
+    <include file="$(find wheelchair_iaslab_odometry)/launch/odometry.launch"/>  
+
+    
+   <!--  <include file="$(find wheelchair_iaslab_control)/launch/control.launch"/> -->
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_model_pkg)/rviz/c.rviz" required="true"/>
+
+
+
+</launch>

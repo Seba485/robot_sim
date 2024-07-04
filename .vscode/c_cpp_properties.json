@@ -1,0 +1,26 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/sebastiano/hmm_workspace/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/sebastiano/hmm_workspace/src/hmm_sim/include/**",
+        "/home/sebastiano/hmm_workspace/src/rosneuro_feedback_wheel/include/**",
+        "/home/sebastiano/hmm_workspace/src/rosneuro_integrator/include/**",
+        "/home/sebastiano/hmm_workspace/src/rosneuro_integrator_exponential/include/**",
+        "/home/sebastiano/hmm_workspace/src/rosneuro_processing-master/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

@@ -1,0 +1,89 @@
+<?xml version="1.0"?> <!--every xacro file start with this line-->
+
+<!--Addizional gazebo indication-->
+<robot>
+    
+    <gazebo reference="body_link">
+        <mu1>0.2</mu1> <!--friction coefficent-->
+        <mu2>0.2</mu2>
+        <material>
+            Gazebo/Red
+        </material>
+    </gazebo>
+
+    <gazebo reference="wheel1_link">
+        <mu1>0.2</mu1> <!--friction coefficent-->
+        <mu2>0.2</mu2>
+        <material>
+            Gazebo/Yellow
+        </material>
+    </gazebo>
+
+    <gazebo reference="wheel2_link">
+        <mu1>0.2</mu1> <!--friction coefficent-->
+        <mu2>0.2</mu2>
+        <material>
+            Gazebo/Yellow
+        </material>
+    </gazebo>
+
+    <gazebo reference="wheel3_link">
+        <mu1>0.2</mu1> <!--friction coefficent-->
+        <mu2>0.2</mu2>
+        <material>
+            Gazebo/Yellow
+        </material>
+    </gazebo>
+
+    <gazebo reference="wheel4_link">
+        <mu1>0.2</mu1> <!--friction coefficent-->
+        <mu2>0.2</mu2>
+        <material>
+            Gazebo/Yellow
+        </material>
+    </gazebo>
+
+
+
+    <!--controller for the robot (virtual device that accept the command from the keyboard and parse them in robot controll)-->
+    <gazebo>
+        <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+
+            <updateRate>100.0</updateRate>
+            <robotNamespace></robotNamespace>
+            <!--robot kinematics-->
+            <leftFrontJoint>wheel4_joint</leftFrontJoint>
+            <rightFrontJoint>wheel3_joint</rightFrontJoint>
+            <leftRearJoint>wheel2_joint</leftRearJoint>
+            <rightRearJoint>wheel1_joint</rightRearJoint>
+            <wheelSeparation>${body_link_y_dim+wheel_link_length}</wheelSeparation> <!--from wheel center to wheel center-->
+            <wheelDiameter>${wheel_link_radius}</wheelDiameter>
+
+            <!--maximum torque that the wheel can produce (dafault is 5Nm)-->
+            <torque>1000</torque>
+
+            <!--topic that receive the geometry_msgs/Twist-->
+            <commandTopic>cmd_vel</commandTopic>
+            <!--tocpic that publish nav_msgs/Odometry-->
+            <odometryTopic>odom</odometryTopic>
+            <!--odometry frame-->
+            <odometryFrame>odom</odometryFrame>
+            <!--robot main frame-->
+            <robotBaseFrame>dummy</robotBaseFrame>
+
+            <!--In order to publish the specified messages-->
+            <publishWheelTF>true</publishWheelTF>
+            <publishOdom>true</publishOdom>
+            <publishWheelJointState>true</publishWheelJointState> <!--to publish sensor_msgs/Jointstate on /joint_state topic-->
+
+            <!--required by gazebo-->
+            <covariance_x>0.0001</covariance_x>
+            <covariance_y>0.0001</covariance_y>
+            <covariance_yaw>0.01</covariance_yaw>
+
+        </plugin>
+
+    </gazebo>
+
+
+</robot>

@@ -1,0 +1,8 @@
+prefix=/home/sebastiano/robot_sim/devel
+
+Name: wheelchair_iaslab_odometry
+Description: Description of wheelchair_iaslab_odometry
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
