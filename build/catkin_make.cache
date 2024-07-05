@@ -1,2 +1,2 @@
-robot_model_pkg:wheelchair_iaslab_odometry
+robot_controller:robot_model_pkg:wheelchair_iaslab_odometry
 -DCATKIN_DEVEL_PREFIX=/home/sebastiano/robot_sim/devel -DCMAKE_INSTALL_PREFIX=/home/sebastiano/robot_sim/install -G Unix Makefiles

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node pkg="robot_controller" type="wasd_controller.py" name="wasd_controller" output='screen'>
+      <param name="controller_topic" value="/wcias_controller/cmd_vel"/>
+      
+  </node>
+
+
+</launch>
